@@ -14,6 +14,7 @@
   background-color: #f9f9f9;
   margin-bottom: 0; /* remove vertical stacking gap */
   text-align: center;
+  
 }
 
 /* Episode image */
@@ -65,3 +66,36 @@ footer a:hover {
   text-decoration: underline;
 }
 
+/* Top bar */
+#top-bar {
+  width: 100%;
+  padding: 20px 30px;
+  box-sizing: border-box;
+}
+
+/* Search + count side-by-side */
+#search-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 25px;
+}
+
+/* Bigger search input */
+#search-input {
+  width: 260px;
+  padding: 10px 12px;
+  font-size: 1.3rem;
+}
+
+/* Bigger count text */
+#episode-count {
+  font-size: 1.5rem;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+
+
+/* In style.css made style changes to display episodes in a grid. 
+/* In style.css styles for search bar added.
