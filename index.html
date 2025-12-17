@@ -9,24 +9,40 @@
   </head>
 
   <body>
-    <div id="root"></div>
-    <footer>
-  <hr />
-  <p>
-    Data originally sourced from
-    <a href="https://www.tvmaze.com" target="_blank" rel="noopener noreferrer">
-      TVMaze.com
-    </a>
-  </p>
-</footer>
+    <!-- Top search bar -->
+    <header id="top-bar">
+      <div id="search-container">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search episodes"
+        />
+        <p id="episode-count"></p>
+      </div>
+    </header>
 
-    <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
-    <script src="episodes.js"></script>
+    <!-- Episodes grid -->
+    <div id="root"></div>
+
+    <!-- Footer credit -->
+    <footer>
+      <hr />
+      <p>
+        Data originally sourced from
+        <a href="https://www.tvmaze.com" target="_blank" rel="noopener noreferrer">
+          TVMaze.com
+        </a>
+      </p>
+    </footer>
+
+    <!-- Loads a provided function called getAllEpisodes() -->
+  <!-- <script src="episodes.js"></script> -->
 
     <!-- Loads YOUR javascript code -->
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
   </body>
 </html>
 
 
-<!-- In index.html added footer for credit.
+
+<!-- In index.html search bar added and ES modules used. 

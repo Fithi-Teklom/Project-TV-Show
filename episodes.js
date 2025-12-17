@@ -31,7 +31,7 @@ function getOneEpisode() {
   };
 }
 
-function getAllEpisodes() {
+export function getAllEpisodes() {
   return [
     {
       id: 4952,
@@ -1853,3 +1853,5 @@ function getAllEpisodes() {
     },
   ];
 }
+
+//. "export function" added to enable  ES modules
