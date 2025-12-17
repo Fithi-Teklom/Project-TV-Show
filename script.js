@@ -39,14 +39,14 @@ function makePageForEpisodes(episodeList) {
   });
 
 
- const credit = document.createElement("p");
-  credit.innerHTML = `Data originally from <a href="https://www.tvmaze.com" target="_blank" rel="noopener noreferrer">TVMaze.com</a>`;
-  credit.style.marginTop = "20px"; 
-  rootElem.appendChild(credit);
+//  const credit = document.createElement("p");
+//   credit.innerHTML = `Data originally from <a href="https://www.tvmaze.com" target="_blank" rel="noopener noreferrer">TVMaze.com</a>`;
+//   credit.style.marginTop = "20px"; 
+//   rootElem.appendChild(credit);
 }
 
 
 
-
+// In script.js removed credit variable and took the functionality to index.html
 
 window.onload = setup;
