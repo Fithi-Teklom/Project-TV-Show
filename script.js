@@ -1,6 +1,6 @@
 //You can edit ALL of the code her
 
-import { getAllEpisodes } from './episodes.js';
+import { getAllEpisodes } from "./episodes.js";
 
 let allEpisodes = []; // store all episodes globally
 
@@ -8,13 +8,14 @@ function setup() {
   allEpisodes = getAllEpisodes();
   displayEpisodes(allEpisodes);
   episodeSearch();
+  episodeSelector();
 }
 
 function episodeSearch() {
   const searchInput = document.getElementById("search-input");
   const countDisplay = document.getElementById("episode-count");
 
-  const totalEpisodes = allEpisodes.length; // store total episodes
+  const totalEpisodes = allEpisodes.length;
 
   // Initial count
   countDisplay.textContent = `Displaying  ${totalEpisodes} out of ${totalEpisodes} episodes`;
@@ -24,10 +25,7 @@ function episodeSearch() {
 
     const filteredEpisodes = allEpisodes.filter((episode) => {
       const nameMatch = episode.name.toLowerCase().includes(searchTerm);
-      const summaryMatch = episode.summary
-        .toLowerCase()
-        .includes(searchTerm);
-
+      const summaryMatch = episode.summary.toLowerCase().includes(searchTerm);
       return nameMatch || summaryMatch;
     });
 
@@ -36,17 +34,70 @@ function episodeSearch() {
   });
 }
 
+// Episode- selector
+function episodeSelector() {
+  const select = document.getElementById("episode-select");
+
+  // Populate dropdown
+  allEpisodes.forEach((episode) => {
+    const seasonNumber = String(episode.season).padStart(2, "0");
+    const episodeNumber = String(episode.number).padStart(2, "0");
+    const episodeCode = `S${seasonNumber}E${episodeNumber}`;
+
+    const option = document.createElement("option");
+    option.value = episodeCode;
+    option.textContent = `${episodeCode} — ${episode.name}`;
+
+    select.appendChild(option);
+  });
+
+  // When selection changes
+  select.addEventListener("change", () => {
+    const selectedId = select.value;
+
+    if (!selectedId) {
+      // Show all episodes
+      displayEpisodes(allEpisodes);
+      // Reset search box
+      const searchInput = document.getElementById("search-input");
+      searchInput.value = "";
+      // Reset count
+      const countDisplay = document.getElementById("episode-count");
+      countDisplay.textContent = `Displaying ${allEpisodes.length} out of ${allEpisodes.length} episodes`;
+      return;
+    }
+
+    // Filter to the selected episode only
+    const filteredEpisode = allEpisodes.filter(
+      (episode) => {
+        const seasonNumber = String(episode.season).padStart(2, "0");
+        const episodeNumber = String(episode.number).padStart(2, "0");
+        const episodeCode = `S${seasonNumber}E${episodeNumber}`;
+        return episodeCode === selectedId;
+      }
+    );
+
+    displayEpisodes(filteredEpisode);
+
+    // Update count
+    const countDisplay = document.getElementById("episode-count");
+    countDisplay.textContent = `Displaying ${filteredEpisode.length} out of ${allEpisodes.length} episodes`;
+  });
+}
+
+// display episodes
 
 function displayEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
   rootElem.innerHTML = "";
 
   episodeList.forEach((episode) => {
-    const episodeCard = document.createElement("section");
-
     const seasonNumber = String(episode.season).padStart(2, "0");
     const episodeNumber = String(episode.number).padStart(2, "0");
     const episodeCode = `S${seasonNumber}E${episodeNumber}`;
+
+    const episodeCard = document.createElement("section");
+    episodeCard.id = episodeCode; 
 
     const title = document.createElement("h2");
     title.textContent = `${episodeCode} — ${episode.name}`;
@@ -64,18 +115,16 @@ function displayEpisodes(episodeList) {
     rootElem.appendChild(episodeCard);
   });
 }
-
 window.onload = setup;
 
-
+// document.addEventListener("DOMContentLoaded", setup);
 
 //  const credit = document.createElement("p");
 //   credit.innerHTML = `Data originally from <a href="https://www.tvmaze.com" target="_blank" rel="noopener noreferrer">TVMaze.com</a>`;
-//   credit.style.marginTop = "20px"; 
+//   credit.style.marginTop = "20px";
 //   rootElem.appendChild(credit);
 
-
-
-
 // In script.js removed credit variable and took the functionality to index.html
-// In script.js filter episode search function added 
+// In script.js filter episode search function added
+
+// Level 200,in script.js episodeSelector function added. 

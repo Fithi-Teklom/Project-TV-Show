@@ -9,22 +9,30 @@
   </head>
 
   <body>
-    <!-- Top search bar -->
+    <!-- Top controls bar -->
     <header id="top-bar">
-      <div id="search-container">
-        <input
-          type="text"
-          id="search-input"
-          placeholder="Search episodes"
-        />
-        <p id="episode-count"></p>
+      <div id="controls">
+        <!-- Episode selector -->
+        <select id="episode-select">
+          <option value="">Select an episode</option>
+        </select>
+
+        <!-- Search + count -->
+        <div id="search-container">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search episodes"
+          />
+          <p id="episode-count"></p>
+        </div>
       </div>
     </header>
 
     <!-- Episodes grid -->
     <div id="root"></div>
 
-    <!-- Footer credit -->
+    <!-- Footer -->
     <footer>
       <hr />
       <p>
@@ -35,14 +43,14 @@
       </p>
     </footer>
 
-    <!-- Loads a provided function called getAllEpisodes() -->
-  <!-- <script src="episodes.js"></script> -->
-
-    <!-- Loads YOUR javascript code -->
+    <!-- Main JS -->
     <script type="module" src="script.js"></script>
   </body>
 </html>
 
 
 
-<!-- In index.html search bar added and ES modules used. 
+<!-- <script src="episodes.js"></script> -->
+
+<!-- In index.html search bar added and ES modules used.
+<! -- Level 200 index.html modified 
