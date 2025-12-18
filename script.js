@@ -1,15 +1,27 @@
-//You can edit ALL of the code her
-
-import { getAllEpisodes } from "./episodes.js";
+//You can edit ALL of the code here
 
 let allEpisodes = []; // store all episodes globally
 
 function setup() {
-  allEpisodes = getAllEpisodes();
-  displayEpisodes(allEpisodes);
-  episodeSearch();
-  episodeSelector();
+  const root = document.getElementById("root");
+  root.innerHTML = "<p>Loading episodes, please wait...</p>"; // Show loading
+
+  fetch("https://api.tvmaze.com/shows/82/episodes")
+    .then(response => {
+      if (!response.ok) throw new Error("Network response was not OK");
+      return response.json();
+    })
+    .then(data => {
+      allEpisodes = data; // store episodes globally
+      episodeSearch();     // activate search bar
+      episodeSelector();   // activate dropdown
+      displayEpisodes(allEpisodes); // display all episodes
+    })
+    .catch(error => {
+      root.innerHTML = "<p>Sorry, we could not load the episodes. Please try again later.</p>";
+    });
 }
+
 
 function episodeSearch() {
   const searchInput = document.getElementById("search-input");
