@@ -20,7 +20,7 @@ function setup() {
     .catch(error => {
       root.innerHTML = "<p>Sorry, we could not load the episodes. Please try again later.</p>";
     });
-}
+} 
 
 
 function episodeSearch() {
