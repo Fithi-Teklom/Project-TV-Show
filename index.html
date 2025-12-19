@@ -11,24 +11,28 @@
   <body>
     <!-- Top controls bar -->
     <header id="top-bar">
-      <div id="controls">
-        <!-- Episode selector -->
-        <select id="episode-select">
-          <option value="">Select an episode</option>
-        </select>
+  <div id="controls">
+    <!-- Show selector -->
+    <select id="show-select">
+      <option value="">Select a show</option>
+    </select>
 
-        <!-- Search + count -->
-        <div id="search-container">
-          <input 
-            type="text"
-            id="search-input"
-            placeholder="Search episodes"
-          />
-          <p id="episode-count"></p>
-        </div>
-      </div>
-    </header>
+    <!-- Episode selector -->
+    <select id="episode-select">
+      <option value="">Select an episode</option>
+    </select>
 
+    <!-- Search + count -->
+    <div id="search-container">
+      <input 
+        type="text"
+        id="search-input"
+        placeholder="Search episodes"
+      />
+      <p id="episode-count"></p>
+    </div>
+  </div>
+</header>
     <!-- Episodes grid -->
     <div id="root"></div>
 
@@ -54,3 +58,4 @@
 
 <!-- In index.html search bar added and ES modules used.
 <! -- Level 200 index.html modified 
+<! -- Level 400 index.html modified to handle select show 
