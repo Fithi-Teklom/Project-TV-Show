@@ -4,15 +4,53 @@
 let allShows = [];       
 let allEpisodes = [];    
 const episodesCache = {}; // to prevent fetching again and again
+//added another globals
+let showsFetched = false;
+let showSearchListenerAdded = false;
+
 
 // API for shows 
 const SHOWS_API = "https://api.tvmaze.com/shows";
 
 // Setup
 function setup() {
-  showLoading("Loading shows, please wait...");
+  setupNavigation();
+  showShowsView();
+  showShowsLoading("Loading shows, please wait...");
   fetchShows();
 }
+
+// Added needed functions under set up function
+function showShowsView() {
+  document.getElementById("shows-view").hidden = false;
+  document.getElementById("episodes-view").hidden = true;
+  document.getElementById("nav").hidden = true;
+}
+
+function showEpisodesView() {
+  document.getElementById("shows-view").hidden = true;
+  document.getElementById("episodes-view").hidden = false;
+  document.getElementById("nav").hidden = false;
+}
+
+function setupNavigation() {
+  const back = document.getElementById("back-to-shows");
+  back.onclick = (e) => {
+    e.preventDefault();
+    showShowsView();
+  };
+}
+
+function showShowsLoading(message) {
+  const container = document.getElementById("shows-container");
+  container.innerHTML = `<p>${message}</p>`;
+}
+
+function showShowsError(message) {
+  const container = document.getElementById("shows-container");
+  container.innerHTML = `<p style="color:red; font-weight:bold;">${message}</p>`;
+}
+
 
 // Helper functions 
 function zeroPad(num) {
@@ -35,8 +73,11 @@ function showError(message) {
   root.innerHTML = `<p style="color:red; font-weight:bold;">${message}</p>`;
 }
 
+
 // Fetch Shows 
 async function fetchShows() {
+  if (showsFetched) return;
+  showsFetched = true;
   try {
     const response = await fetch(SHOWS_API);
     if (!response.ok) throw new Error("Failed to load shows");
@@ -46,16 +87,81 @@ async function fetchShows() {
 
     // Sort shows alphabetically by name, case-insensitive
     allShows.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
-
+    
+    renderShowsListing(allShows);
+    setupShowSearch();
     populateShowSelect(allShows);
-    // Optionally, auto-select the first show
-    if (allShows.length > 0) {
-      selectShow(allShows[0].id);
+    
+  } catch (err) {
+    showShowsError("Could not load TV shows. Try again later.");;
+  }
+}
+
+function renderShowsListing(shows) {
+  const container = document.getElementById("shows-container");
+  container.innerHTML = "";
+
+  shows.forEach((show) => {
+    const card = document.createElement("article");
+    card.className = "show-card";
+
+    const title = document.createElement("h2");
+    const link = document.createElement("a");
+    link.href = "#";
+    link.textContent = show.name;
+    link.onclick = (e) => {
+      e.preventDefault();
+      selectShow(show.id);
+    };
+    title.appendChild(link);
+    card.appendChild(title);
+
+    if (show.image?.medium) {
+      const img = document.createElement("img");
+      img.src = show.image.medium;
+      img.alt = show.name;
+      card.appendChild(img);
     }
 
-  } catch (err) {
-    showError("Could not load TV shows. Try again later.");
-  }
+    const meta = document.createElement("p");
+    const genres = (show.genres || []).join(", ") || "N/A";
+    const rating = show.rating?.average ?? "N/A";
+    const runtime = show.runtime ?? "N/A";
+    const status = show.status ?? "N/A";
+
+    meta.innerHTML = `
+      <strong>Genres:</strong> ${genres}<br>
+      <strong>Status:</strong> ${status}<br>
+      <strong>Rating:</strong> ${rating}<br>
+      <strong>Runtime:</strong> ${runtime} mins
+    `;
+    card.appendChild(meta);
+
+    const summary = document.createElement("div");
+    summary.innerHTML = show.summary || "No summary available.";
+    card.appendChild(summary);
+
+    container.appendChild(card);
+  });
+}
+
+function setupShowSearch() {
+  if (showSearchListenerAdded) return;
+  showSearchListenerAdded = true;
+
+  const input = document.getElementById("show-search");
+  input.oninput = () => {
+    const term = input.value.toLowerCase();
+
+    const filtered = allShows.filter((show) => {
+      const name = (show.name || "").toLowerCase();
+      const summary = (show.summary || "").toLowerCase();
+      const genres = (show.genres || []).join(" ").toLowerCase();
+      return name.includes(term) || summary.includes(term) || genres.includes(term);
+    });
+
+    renderShowsListing(filtered);
+  };
 }
 
 // Selecting shows
@@ -76,6 +182,8 @@ function populateShowSelect(shows) {
     selectShow(showId);
   });
 }
+
+showEpisodesView();
 
 // Select Show 
 function selectShow(showId) {
