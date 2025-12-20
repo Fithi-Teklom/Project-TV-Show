@@ -1,3 +1,6 @@
+.body{
+  background-color: bisque;
+}
 /* hide-only class for accessibility labels */
 .sr-only {
   position: absolute;
@@ -146,6 +149,7 @@
 .read-more-btn:hover {
   background: #f5f5f5;
 }
+
 
 
 /* Fixed widths for the select and search inputs */
