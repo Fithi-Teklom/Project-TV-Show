@@ -137,12 +137,24 @@ function renderShowsListing(shows) {
     `;
     card.appendChild(meta);
 
-    const summary = document.createElement("div");
-    summary.innerHTML = show.summary || "No summary available.";
-    card.appendChild(summary);
+   const summary = document.createElement("div");
+summary.className = "show-summary";
+summary.innerHTML = show.summary || "No summary available.";
+card.appendChild(summary);
 
-    container.appendChild(card);
-  });
+// Read more / Read less button
+const btn = document.createElement("button");
+btn.type = "button";
+btn.className = "read-more-btn";
+btn.textContent = "Read more";
+
+btn.onclick = () => {
+  const expanded = summary.classList.toggle("expanded");
+  btn.textContent = expanded ? "Read less" : "Read more";
+};
+container.appendChild(card);
+card.appendChild(btn);
+});
 }
 
 function setupShowSearch() {
@@ -183,11 +195,11 @@ function populateShowSelect(shows) {
   });
 }
 
-showEpisodesView();
 
 // Select Show 
 function selectShow(showId) {
   if (!showId) return;
+  showEpisodesView();
 
   // Check cache first (already stored)
   if (episodesCache[showId]) {
@@ -225,7 +237,7 @@ function setupSearch() {
 
   searchInput.value = ""; // resetting search
 
-  searchInput.addEventListener("input", () => {
+  searchInput.oninput = () => {
     const term = searchInput.value.toLowerCase();
     const filtered = allEpisodes.filter(ep =>
       ep.name.toLowerCase().includes(term) ||
@@ -234,7 +246,7 @@ function setupSearch() {
 
     displayEpisodes(filtered);
     countDisplay.textContent = `Displaying ${filtered.length} out of ${allEpisodes.length} episodes`;
-  });
+  };
 }
 
 // Episode Selector 
@@ -250,7 +262,7 @@ function populateEpisodeSelect(episodeList) {
     select.appendChild(option);
   });
 
-  select.addEventListener("change", (e) => {
+  select.onchange = (e) => {
     const selectedCode = e.target.value;
     if (!selectedCode) {
       displayEpisodes(allEpisodes);
@@ -266,7 +278,7 @@ function populateEpisodeSelect(episodeList) {
 
     displayEpisodes(filtered);
     document.getElementById("episode-count").textContent = `Displaying ${filtered.length} out of ${allEpisodes.length} episodes`;
-  });
+  };
 }
 
 // Display Episodes

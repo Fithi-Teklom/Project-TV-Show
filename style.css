@@ -1,3 +1,61 @@
+/* hide-only class for accessibility labels */
+.sr-only {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Shows listing grid */
+#shows-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+  padding: 16px;
+}
+
+.show-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  background: white;
+}
+
+.show-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+#nav {
+  margin: 16px;
+}
+
+#back-to-shows {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Show search row */
+#show-search-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 16px;
+}
+
+#show-search {
+  flex: 1;
+  height: 42px;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+
 /* Root grid */
 #root {
   display: grid;
@@ -62,8 +120,36 @@
   flex-wrap: wrap; /* wrap on smaller screens */
 }
 
+/* Show summary clamped to a few lines */
+.show-summary {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+}
+
+/* When expanded, show full text */
+.show-summary.expanded {
+  -webkit-line-clamp: unset;
+  display: block;
+}
+
+.read-more-btn {
+  margin-top: 10px;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.read-more-btn:hover {
+  background: #f5f5f5;
+}
+
+
 /* Fixed widths for the select and search inputs */
-#show-select,
+
 #episode-select {
   padding: 10px 12px;
   font-size: 1.2rem;
