@@ -9,32 +9,52 @@
   </head>
 
   <body>
+    <!--Added a “Back to shows” link and a Shows Listing section-->
+
+    <nav id="nav" hidden>
+  <a href="#" id="back-to-shows">← Back to shows</a>
+</nav>
+
+<section id="shows-view">
+  <h1>TV Shows</h1>
+
+  <div id="show-search-row">
+    <label for="show-search">Search shows:</label>
+    <input id="show-search" type="text" placeholder="Search shows..." />
+  </div>
+
+  <div id="shows-container"></div>
+</section>
+
+<section id="episodes-view" hidden>
+
     <!-- Top controls bar -->
     <header id="top-bar">
   <div id="controls">
     <!-- Show selector -->
+    <label class="sr-only" for="show-select">Select a show</label>
     <select id="show-select">
       <option value="">Select a show</option>
     </select>
 
     <!-- Episode selector -->
+    <label class="sr-only" for="episode-select">Select an episode</label>
     <select id="episode-select">
       <option value="">Select an episode</option>
     </select>
 
     <!-- Search + count -->
     <div id="search-container">
-      <input 
-        type="text"
-        id="search-input"
-        placeholder="Search episodes"
-      />
+      <label class="sr-only" for="search-input">Search episodes</label>
+      <input type="text" id="search-input" placeholder="Search episodes" />
+
       <p id="episode-count"></p>
     </div>
   </div>
 </header>
     <!-- Episodes grid -->
     <div id="root"></div>
+    </section>
 
     <!-- Footer -->
     <footer>
