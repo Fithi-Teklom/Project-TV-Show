@@ -7,6 +7,8 @@ const episodesCache = {}; // to prevent fetching again and again
 //added another globals
 let showsFetched = false;
 let showSearchListenerAdded = false;
+let currentShowId = null;
+
 
 
 // API for shows 
@@ -152,8 +154,8 @@ btn.onclick = () => {
   const expanded = summary.classList.toggle("expanded");
   btn.textContent = expanded ? "Read less" : "Read more";
 };
-container.appendChild(card);
 card.appendChild(btn);
+container.appendChild(card);
 });
 }
 
@@ -199,6 +201,11 @@ function populateShowSelect(shows) {
 // Select Show 
 function selectShow(showId) {
   if (!showId) return;
+   currentShowId = String(showId); // store the selected show
+
+  // ✅ update dropdown to match the clicked card/show
+  const showSelect = document.getElementById("show-select");
+  showSelect.value = currentShowId;
   showEpisodesView();
 
   // Check cache first (already stored)
